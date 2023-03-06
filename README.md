@@ -27,7 +27,8 @@ docker-compose build
 docker-compose push
 ```
 stackmpi is besed on Ubuntu 20.04 with MPICH installed. If you need any additianal software available on each node, modify Dockerfile appropriately and build+push image again.
-REMARK: If you restart your machine, from some reason the image needs to be pushed to the repository again.
+
+**REMARK**: If you restart your machine, from some reason the image needs to be pushed to the repository again.
 
 There are a few helper scripts available:
 `start-stack` and `stop-stack` starts or stops all nodes (docker stack) specified in docker-compose.yml. By default there is one _master_ node started on _manager_ node (assume this is current one) and 2 _worker_ nodes. If you want more workers, go to docker-compose.yml file and modify `replicas` attribute in `worker` section.

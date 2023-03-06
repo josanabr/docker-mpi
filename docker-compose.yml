@@ -19,11 +19,14 @@ services:
                     - "node.role==manager"
         volumes:
             - ./project:/root/project
+            - ./shared_dir:/shared_dir
     worker:
         image: 127.0.0.1:5000/mpi
         depends_on:
             - master
         deploy:
             replicas: 2   # Change this number if you want more worker nodes
-            placement:
-                max_replicas_per_node: 1
+            #placement:
+            #    max_replicas_per_node: 1
+        volumes:
+            - ./shared_dir:/shared_dir
