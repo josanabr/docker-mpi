@@ -3,9 +3,11 @@ services:
     master:
         image: 127.0.0.1:5000/mpi
         build: .
+        hostname: master
         # We can simply attach to the container by attach-stack command, but
         # it is possible also to expose SSH port and connect by ssh.
-        # Uncomment this section if you want to ssh to master node (command ssh-stack).
+        # Uncomment this section if you want to ssh to master node 
+        # (command ssh-stack).
         #ports:
         #    - target: 22
         #      published: 2222
@@ -22,6 +24,7 @@ services:
             - ./shared_dir:/shared_dir
     worker:
         image: 127.0.0.1:5000/mpi
+        hostname: worker
         depends_on:
             - master
         deploy:

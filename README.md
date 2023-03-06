@@ -17,6 +17,13 @@ Set up registry container (this is the approach to distribute image among nodes)
 ```
 docker service create --name registry --publish published=5000,target=5000 registry:2
 ```
+
+To validate if service is running:
+
+```
+docker service ps registry
+```
+
 Now we are ready to push your image there. 
 
 # Launching MPI cluster 
@@ -26,14 +33,15 @@ Build and push stackmpi image to the registry:
 docker-compose build
 docker-compose push
 ```
-stackmpi is besed on Ubuntu 20.04 with MPICH installed. If you need any additianal software available on each node, modify Dockerfile appropriately and build+push image again.
+stackmpi is based on Ubuntu 20.04 with MPICH installed. If you need any additianal software available on each node, modify [`Dockerfile`](Dockerfile) appropriately and build+push image again.
 
 **REMARK**: If you restart your machine, from some reason the image needs to be pushed to the repository again.
 
 There are a few helper scripts available:
-`start-stack` and `stop-stack` starts or stops all nodes (docker stack) specified in docker-compose.yml. By default there is one _master_ node started on _manager_ node (assume this is current one) and 2 _worker_ nodes. If you want more workers, go to docker-compose.yml file and modify `replicas` attribute in `worker` section.
 
-`attach-stack` attaches to the _master_ container. The another approach is to SSH to the container with `ssh-stack` but by default SSH port is not exposed. You can do this by modification docker-compose.yml (uncomment `port` section in `master` section).
+- `start-stack` and `stop-stack` starts or stops all nodes (docker stack) specified in docker-compose.yml. By default there is one _master_ node started on _manager_ node (assume this is current one) and 2 _worker_ nodes. **If you want more workers**, go to [`docker-compose.yml`](docker-compose.yml) file and modify `replicas` attribute in `worker` section.
+
+- `attach-stack` attaches to the _master_ container. The another approach is to SSH to the container with `ssh-stack` but by default SSH port is not exposed. You can do this by modification [`docker-compose.yml`](docker-compose.yml) (uncomment `port` section in `master` section).
 
 Inside master node, there are a few aditional commands available:
 `node-master` displays IP of master node,
